@@ -18,7 +18,7 @@ class GoogleController extends Controller
     public function callback()
     {
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
+            $googleUser = Socialite::driver('google')->user();
         } catch (\Exception $e) {
             return redirect()->route('login')->withErrors([
                 'login' => 'Google login failed. Please try again.',
