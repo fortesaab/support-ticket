@@ -14,7 +14,7 @@
         "laravel/socialite": "^5.26",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^4.2",
-        "spatie/laravel-permission": "^6.25"
+        "spatie/laravel-permission": "^7.3"
     },
     "require-dev": {
         "doctrine/dbal": "^4.4",

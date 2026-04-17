@@ -4,51 +4,65 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use Throwable;
 
 class GoogleController extends Controller
 {
-    public function redirect()
+    public function redirect(): RedirectResponse
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+        ->with(['prompt' => 'select_account'])
+        ->redirect();
     }
 
-    public function callback()
+    public function callback(): RedirectResponse
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-        } catch (\Exception $e) {
-            return redirect()->route('login')->withErrors([
-                'login' => 'Google login failed. Please try again.',
-            ]);
-        }
 
-        $user = User::where('email', $googleUser->getEmail())->first();
+            $email = $googleUser->getEmail();
 
-        if ($user) {
-            $user->update([
-                'name' => $googleUser->getName(),
-                'google_id' => $googleUser->getId(),
-                'avatar' => $googleUser->getAvatar(),
-            ]);
-        } else {
-            $user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'google_id' => $googleUser->getId(),
-                'avatar' => $googleUser->getAvatar(),
-                'password' => Str::random(32),
-            ]);
-        }
+            $user = User::firstOrNew(['email' => $email]);
 
-        Auth::login($user);
+            if (! $user->exists) {
+                $user->password = Hash::make(Str::random(32));
+            }
 
-        return redirect()->intended('/dashboard');
+            $user->name = $googleUser->getName() ?: 'Google User';
+            $user->google_id = $googleUser->getId();
+            $user->avatar = $googleUser->getAvatar();
+            $user->save();
+
+            if (! $user->hasAnyRole(['admin', 'agent', 'customer'])) {
+                $user->assignRole('customer');
+            }
+
+            $adminEmail = config('services.admin.email');
+
+            if (
+                $adminEmail &&
+                strcasecmp($email, $adminEmail) === 0 &&
+                ! $user->hasRole('admin')
+            ) {
+                $user->syncRoles(['admin']);
+            }
+
+
+            Auth::login($user);
+
+            return redirect()->route('post-login');
+        } catch (Throwable $exception) {
+    dd($exception->getMessage(), $exception->getFile(), $exception->getLine());
+}
+
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
 
