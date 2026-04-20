@@ -28,11 +28,11 @@
         .page {
             max-width: 1150px;
             margin: 0 auto;
-            padding: 32px 20px 48px;
+            padding: 24px 20px 40px;
         }
 
         .shell {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             border: 1px solid rgba(219, 228, 240, 0.9);
             border-radius: 28px;
             box-shadow: var(--shadow);
@@ -40,14 +40,26 @@
             backdrop-filter: blur(8px);
         }
 
-        .shell-header {
-            padding: 28px 30px 20px;
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 24px;
             border-bottom: 1px solid var(--border);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.85));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.75));
+            flex-wrap: wrap;
+        }
+
+        .brand-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .eyebrow {
             display: inline-block;
+            width: fit-content;
             padding: 7px 12px;
             border-radius: 999px;
             background: #e0ecff;
@@ -59,28 +71,10 @@
         }
 
         .brand {
-            margin: 14px 0 6px;
-            font-size: 42px;
-            line-height: 1;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-        }
-
-        .subtitle {
             margin: 0;
-            max-width: 700px;
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-top: 22px;
-            flex-wrap: wrap;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
         .nav {
@@ -113,6 +107,7 @@
             border-radius: 18px;
             background: white;
             border: 1px solid #e2e8f0;
+            flex-wrap: wrap;
         }
 
         .user-meta {
@@ -157,16 +152,6 @@
             color: #1d4ed8;
         }
 
-        .logout-btn {
-            border: 0;
-            border-radius: 12px;
-            padding: 10px 14px;
-            background: linear-gradient(135deg, #111827, #2563eb);
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         .shell-body {
             padding: 30px;
         }
@@ -193,6 +178,8 @@
             font-size: 16px;
             line-height: 1.7;
         }
+
+
 
         .grid {
             display: grid;
@@ -408,6 +395,37 @@
             font-size: 14px;
         }
 
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .badge-admin {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-agent {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-customer {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-none {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+
         .admin-role-form {
             display: flex;
             align-items: center;
@@ -423,16 +441,37 @@
             font-size: 14px;
         }
 
-        .admin-save-btn {
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 12px 18px;
             border: 0;
             border-radius: 12px;
-            padding: 10px 14px;
-            background: linear-gradient(135deg, #111827, #2563eb);
-            color: white;
             font-size: 14px;
             font-weight: 700;
+            text-decoration: none;
             cursor: pointer;
+            transition: opacity 0.15s ease, transform 0.15s ease;
         }
+
+        .btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #111827, #2563eb);
+            color: white;
+        }
+
+        .btn-sm {
+            min-height: 40px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+
 
         @media (max-width: 900px) {
 
@@ -460,7 +499,6 @@
                 font-size: 34px;
             }
 
-            .shell-header,
             .shell-body,
             .card,
             .profile-panel,
@@ -474,48 +512,46 @@
 <body>
     <div class="page">
         <div class="shell">
-            <div class="shell-header">
-                <span class="eyebrow">Support Portal</span>
-                <h1 class="brand">Support Ticket</h1>
-                <p class="subtitle">
-                    Role-based access for admins, agents, and customers, with a cleaner and more intentional interface.
-                </p>
+            <div class="topbar">
+                <div class="brand-wrap">
+                    <h1 class="brand">Support Ticket</h1>
+                </div>
 
                 @auth
-                    <div class="topbar">
-                        <nav class="nav">
-                            @if (auth()->user()->hasRole('admin'))
-                                <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
-                            @endif
+                    <nav class="nav">
+                        @if (auth()->user()->hasRole('admin'))
+                            <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                        @endif
 
-                            @if (auth()->user()->hasRole('agent'))
-                                <a href="{{ route('agent.dashboard') }}">Agent Dashboard</a>
-                            @endif
+                        @if (auth()->user()->hasRole('agent'))
+                            <a href="{{ route('agent.dashboard') }}">Agent Dashboard</a>
+                        @endif
 
-                            @if (auth()->user()->hasRole('customer'))
-                                <a href="{{ route('dashboard') }}">My Dashboard</a>
-                            @endif
-                        </nav>
+                        @if (auth()->user()->hasRole('customer'))
+                            <a href="{{ route('dashboard') }}">My Dashboard</a>
+                            <a href="{{ route('tickets.index') }}">My Tickets</a>
+                            <a href="{{ route('tickets.create') }}">Create Ticket</a>
+                        @endif
+                    </nav>
 
-                        <div class="user-chip">
-                            <div class="user-meta">
-                                <span class="user-name">{{ auth()->user()->name }}</span>
-                                <span class="user-email">{{ auth()->user()->email }}</span>
-                            </div>
-
-                            @if (auth()->user()->hasRole('admin'))
-                                <span class="role-pill role-admin">Admin</span>
-                            @elseif (auth()->user()->hasRole('agent'))
-                                <span class="role-pill role-agent">Agent</span>
-                            @else
-                                <span class="role-pill role-customer">Customer</span>
-                            @endif
-
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="logout-btn">Logout</button>
-                            </form>
+                    <div class="user-chip">
+                        <div class="user-meta">
+                            <span class="user-name">{{ auth()->user()->name }}</span>
+                            <span class="user-email">{{ auth()->user()->email }}</span>
                         </div>
+
+                        @if (auth()->user()->hasRole('admin'))
+                            <span class="role-pill role-admin">Admin</span>
+                        @elseif (auth()->user()->hasRole('agent'))
+                            <span class="role-pill role-agent">Agent</span>
+                        @else
+                            <span class="role-pill role-customer">Customer</span>
+                        @endif
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
                     </div>
                 @endauth
             </div>

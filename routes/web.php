@@ -5,6 +5,8 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\PostLoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TicketController;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -33,8 +35,15 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('agent')->middleware('role:agent')->group(function () {
     Route::get('/', [AgentController::class, 'index'])->name('agent.dashboard');
-});
-    Route::middleware('role:customer')->group(function () {
-        Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
     });
+    Route::middleware('role:customer')->group(function () {
+    Route::view('/dashboard', 'pages.dashboard')->name('dashboard');
+
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
+    Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    });
+
+
 });

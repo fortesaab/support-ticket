@@ -93,7 +93,7 @@
                                             @endforeach
                                         </select>
 
-                                        <button type="submit" class="admin-save-btn">Save</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
                                     </form>
                                 </td>
                             </tr>
