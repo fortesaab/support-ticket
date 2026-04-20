@@ -25,13 +25,13 @@ body {
 }
 
 .page {
-    max-width: 1100px;
+    max-width: 1150px;
     margin: 0 auto;
-    padding: 32px 20px 48px;
+    padding: 24px 20px 40px;
 }
 
 .shell {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(219, 228, 240, 0.9);
     border-radius: 28px;
     box-shadow: var(--shadow);
@@ -49,8 +49,45 @@ body {
     );
 }
 
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.96),
+        rgba(239, 246, 255, 0.75)
+    );
+    flex-wrap: wrap;
+}
+
+.brand-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.brand {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.auth-brand {
+    margin: 14px 0 6px;
+    font-size: 42px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
 .eyebrow {
     display: inline-block;
+    width: fit-content;
     padding: 7px 12px;
     border-radius: 999px;
     background: #e0ecff;
@@ -61,14 +98,6 @@ body {
     text-transform: uppercase;
 }
 
-.brand {
-    margin: 14px 0 6px;
-    font-size: 42px;
-    line-height: 1;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-}
-
 .subtitle {
     margin: 0;
     max-width: 700px;
@@ -77,12 +106,87 @@ body {
     line-height: 1.6;
 }
 
+.nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.nav a:hover {
+    background: #eef2ff;
+    color: #1d4ed8;
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    flex-wrap: wrap;
+}
+
+.user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.user-email {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.role-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.role-admin {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.role-agent {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.role-customer {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
 .shell-body {
     padding: 30px;
 }
 
 .card {
-    background: var(--card);
+    background: white;
     border: 1px solid var(--border);
     border-radius: 24px;
     box-shadow: 0 14px 35px rgba(15, 23, 42, 0.06);
@@ -104,28 +208,6 @@ body {
     line-height: 1.7;
 }
 
-.button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 24px;
-    padding: 14px 20px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #111827, #1d4ed8);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 28px rgba(37, 99, 235, 0.24);
-}
-
 .grid {
     display: grid;
     gap: 24px;
@@ -136,23 +218,22 @@ body {
 }
 
 .stat {
-    padding: 18px;
-    border-radius: 18px;
-    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
     background: #f8fbff;
 }
 
 .stat-label {
     margin: 0;
-    font-size: 13px;
-    color: #64748b;
+    color: var(--muted);
+    font-size: 14px;
 }
 
 .stat-value {
     margin: 10px 0 0;
     font-size: 28px;
     font-weight: 800;
-    color: #172033;
 }
 
 .profile-panel {
@@ -190,17 +271,6 @@ body {
     background: rgba(255, 255, 255, 0.08);
     color: #e2e8f0;
     line-height: 1.7;
-}
-
-.logout-btn {
-    margin-top: 22px;
-    border: 0;
-    border-radius: 14px;
-    padding: 12px 16px;
-    background: white;
-    color: #0f172a;
-    font-weight: 700;
-    cursor: pointer;
 }
 
 .alert {
@@ -407,20 +477,43 @@ body {
     color: #172033;
 }
 
-.admin-save-btn {
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 18px;
     border: 0;
     border-radius: 12px;
-    padding: 10px 14px;
-    background: linear-gradient(135deg, #111827, #2563eb);
-    color: white;
     font-size: 14px;
     font-weight: 700;
+    text-decoration: none;
     cursor: pointer;
-    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.16);
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
 }
 
-.admin-save-btn:hover {
+.btn:hover {
     opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #111827, #2563eb);
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-sm {
+    min-height: 40px;
+    padding: 10px 14px;
+    font-size: 13px;
 }
 
 @media (max-width: 900px) {
@@ -429,25 +522,29 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .admin-role-form {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .admin-select,
-    .admin-save-btn {
+    .admin-select {
         width: 100%;
     }
 
-    .brand {
+    .auth-brand {
         font-size: 34px;
     }
 
-    .shell-header,
     .shell-body,
     .card,
     .profile-panel,
-    .admin-hero {
+    .admin-hero,
+    .shell-header {
         padding: 22px;
     }
 }

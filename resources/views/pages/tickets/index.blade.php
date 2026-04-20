@@ -4,13 +4,8 @@
 
 @section('content')
     <div class="admin-page">
-        <section class="admin-hero">
-            <span class="admin-kicker">My Tickets</span>
-            <h2 class="admin-title">Track your support requests</h2>
-            <p class="admin-copy">
-                Review the tickets you have created, monitor their status, and open any request to see full details.
-            </p>
-        </section>
+        <x-ui.page-header label="My Tickets" title="Track your support requests"
+            description="Review the tickets you have created, monitor their status, and open any request to see full details." />
 
         <section class="admin-table-card">
             <div class="admin-table-header"
@@ -25,7 +20,6 @@
                 <a href="{{ route('tickets.create') }}" class="btn btn-primary">
                     New Ticket
                 </a>
-
             </div>
 
             <div class="admin-table-wrap">
@@ -48,18 +42,18 @@
                         <tbody>
                             @foreach ($tickets as $ticket)
                                 @php
-                                    $priorityClass = match ($ticket->priority?->name) {
-                                        'Critical' => 'badge-admin',
-                                        'High' => 'badge-agent',
-                                        'Medium' => 'badge-customer',
-                                        default => 'badge-none',
+                                    $priorityVariant = match ($ticket->priority?->name) {
+                                        'Critical' => 'admin',
+                                        'High' => 'agent',
+                                        'Medium' => 'customer',
+                                        default => 'neutral',
                                     };
 
-                                    $statusClass = match ($ticket->status?->name) {
-                                        'Resolved', 'Closed' => 'badge-agent',
-                                        'Open' => 'badge-customer',
-                                        'In Progress' => 'badge-admin',
-                                        default => 'badge-none',
+                                    $statusVariant = match ($ticket->status?->name) {
+                                        'Resolved', 'Closed' => 'agent',
+                                        'Open' => 'customer',
+                                        'In Progress' => 'admin',
+                                        default => 'neutral',
                                     };
                                 @endphp
 
@@ -70,18 +64,23 @@
                                             {{ \Illuminate\Support\Str::limit($ticket->description, 60) }}
                                         </div>
                                     </td>
+
                                     <td>{{ $ticket->category?->name ?? 'Uncategorized' }}</td>
+
                                     <td>
-                                        <span class="role-badge {{ $priorityClass }}">
+                                        <x-ui.badge :variant="$priorityVariant">
                                             {{ $ticket->priority?->name ?? 'N/A' }}
-                                        </span>
+                                        </x-ui.badge>
                                     </td>
+
                                     <td>
-                                        <span class="role-badge {{ $statusClass }}">
+                                        <x-ui.badge :variant="$statusVariant">
                                             {{ $ticket->status?->name ?? 'N/A' }}
-                                        </span>
+                                        </x-ui.badge>
                                     </td>
+
                                     <td>{{ $ticket->created_at?->format('Y-m-d H:i') }}</td>
+
                                     <td>
                                         <a href="{{ route('tickets.show', $ticket) }}"
                                             style="font-weight: 700; color: #1d4ed8; text-decoration: none;">

@@ -64,9 +64,9 @@
             </div>
 
             <div>
-                <button type="submit" class="btn btn-primary">
+                <x-ui.button type="submit" variant="primary">
                     Create Ticket
-                </button>
+                </x-ui.button>
 
             </div>
         </form>

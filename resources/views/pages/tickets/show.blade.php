@@ -60,9 +60,9 @@
                         {{ $ticket->agent->email }}
                     </div>
                 @else
-                    <span class="role-badge badge-none" style="margin-top: 10px;">
+                    <x-ui.badge variant="neutral" style="margin-top: 10px;">
                         Not Assigned Yet
-                    </span>
+                    </x-ui.badge>
                 @endif
             </div>
         </div>

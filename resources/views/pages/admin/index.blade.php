@@ -61,13 +61,15 @@
                         @foreach ($users as $user)
                             @php
                                 $currentRole = $user->roles->pluck('name')->first();
-                                $roleClass = match ($currentRole) {
-                                    'admin' => 'badge-admin',
-                                    'agent' => 'badge-agent',
-                                    'customer' => 'badge-customer',
-                                    default => 'badge-none',
+
+                                $roleVariant = match ($currentRole) {
+                                    'admin' => 'admin',
+                                    'agent' => 'agent',
+                                    'customer' => 'customer',
+                                    default => 'neutral',
                                 };
                             @endphp
+
 
                             <tr>
                                 <td>
@@ -75,9 +77,10 @@
                                     <div class="admin-user-email">{{ $user->email }}</div>
                                 </td>
                                 <td>
-                                    <span class="role-badge {{ $roleClass }}">
+                                    <x-ui.badge :variant="$roleVariant">
                                         {{ $currentRole ?? 'none' }}
-                                    </span>
+                                    </x-ui.badge>
+
                                 </td>
                                 <td>
                                     <form method="POST" action="{{ route('admin.users.update-role', $user) }}"
@@ -93,7 +96,9 @@
                                             @endforeach
                                         </select>
 
-                                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                        <x-ui.button type="submit" variant="primary" size="sm">
+                                            Save
+                                        </x-ui.button>
                                     </form>
                                 </td>
                             </tr>

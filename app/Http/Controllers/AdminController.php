@@ -19,12 +19,17 @@ class AdminController extends Controller
     }
 
     public function updateRole(Request $request, User $user): RedirectResponse
-{
-    $validated = $request->validate([
-        'role' => ['required', 'in:admin,agent,customer'],
-    ]);
+    {
+        $validated = $request->validate([
+            'role' => ['required', 'in:admin,agent,customer'],
+        ]);
 
-    return back()->with('success', 'Reached updateRole successfully.');
-}
+        $user->syncRoles([$validated['role']]);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'User role updated successfully.');
+    }
+
 
 }

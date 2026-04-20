@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <a href="{{ route('google.redirect') }}" class="button">
+        <a href="{{ route('google.redirect') }}" class="btn btn-primary">
             Continue with Google
         </a>
     </div>
